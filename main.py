@@ -75,10 +75,10 @@ class Unit :
 
             if i[1] < save_result[-1][1]:
                 # print("Je compare :", Affiche(temp), "et", Affiche(save_result))
-                print("temp")
-                Affiche(temp)
-                print("save_result")
-                Affiche(save_result)
+                # print("temp")
+                # Affiche(temp)
+                # # print("save_result")
+                # Affiche(save_result)
                 save_result.pop()
                 save_result.append(i)
                 # print("save result",save_result[-1][1])
@@ -113,21 +113,21 @@ class Unit :
         # while save_result[0][1] > 5.0 :
         for i in range(1):
             # print("1 : ", save_result[0][1])
-            print("Iterate")
+            # print("Iterate")
             save_result_temp = self.Iterate(it_bygen)
             # print("2 : ", save_result[0][1])
             Unit.Compare(save_result, save_result_temp)
             # print("3 : ", save_result[0][1])
-            print("Mutations")
+            # print("Mutations")
             save_result_temp = self.Mutations(save_result)
             # print("4 : ", save_result[0][1])
             Unit.Compare(save_result, save_result_temp)
             # print("5 : ",save_result[0][1])
-            # save_result_temp = self.Cross(save_result)
+            save_result_temp = self.Cross(save_result)
             # print("6 : ", save_result[0][1])
-            # Unit.Compare(save_result, save_result_temp)
+            Unit.Compare(save_result, save_result_temp)
             # print("7 : ", save_result[0][1])
-            # print("temp",save_result[0][1])
+            print("temp",save_result[0][1])
         return save_result[0]
         
 
@@ -151,7 +151,7 @@ if __name__ == "__main__":
     IA = Unit(extract)
     # print(IA.Fitness([50,4,5,60,1,2]))
     result = IA.Generation(3)
-    # print("result :",result)
+    print("result :",result)
     # temp = [[[2,4,6,10,11],10],[[],15],[[],14]]
     # Affiche(temp)
     # print(Unit.Compare(temp,[[[5,10,15,20,25],5],[[],20]]))
