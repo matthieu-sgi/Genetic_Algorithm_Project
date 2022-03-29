@@ -28,35 +28,27 @@ def Affiche(l : list):
 
 
 class Unit :
-    def __init__(self,extract: list):
+    def __init__(self,extract: np.array,ind :int):
         self.training_data = extract
+        self.p1 = 200*np.random.random(ind) -100
+        self.p2 = 200*np.random.random(ind) -100
+        self.p3 = 200*np.random.random(ind) -100
+        self.p4 = 200*np.random.random(ind) -100
+        self.p5 = 200*np.random.random(ind) -100
+        self.p6 = 200*np.random.random(ind) -100
+        self.fitness = self.Fitness()
+        self.ind = ind
     
-    def Fitness(self, test_param : list):
-        
-        distance_moyenne = 0
-        for i in self.training_data :
-            t= i[0]
-            x_test = test_param[0] * (math.sin(test_param[1] * t + test_param[2]))
-            y_test = test_param[3] * (math.sin(test_param[4] * t + test_param[5]))
-            distance_moyenne += math.sqrt((x_test-i[1])**2 + (y_test-i[2])**2)
-            # distance_moyenne += (x_test-i[1])**2 + (y_test-i[2])**2
-        # return float(distance_moyenne/len(self.training_data))
-        return distance_moyenne
-
-    def Cross(self,save_result : list) : 
-        results = copy.deepcopy(save_result)
-       
+    def Fitness(self,p1,p2,p3,p4,p5,p6):
+        x = p1 * np.sin(p2*self.training_data[0] +p3)
+        y = p4 * np.sin(p5*self.training_data[0] + p6)
+        return (self.training_data[1]-x)**2 + (self.training_data[2]-y)**2
         
 
-        for i in range(0,len(results)- len(results)%2,2):
-            
-            results[i][0],results[i+1][0] = results[i][0][:int(len(results[i][0])/2):] + results[i+1][0][int(len(results[i][0])/2)::],results[i+1][0][:int(len(results[i][0])/2):] + results[i][0][int(len(results[i][0])/2)::]
-            results[i][1] = self.Fitness(results[i][0])
-            results[i+1][1] = self.Fitness(results[i+1][0])
+    def Cross(self) : 
+        
 
-        results.sort(key=lambda x : x[1], reverse = False)
-
-        return results
+        
 
     def Equal(results):
         # temp = True
@@ -73,33 +65,46 @@ class Unit :
             avg += i[1]
         return float(avg/len(results))
 
-    def Mutations(self, save_result : list):
-        results = copy.deepcopy(save_result)
-
-        for i in range(len(save_result)) :
-            temp = int(random.randint(0,len(save_result[i][0])))
-            for j in range(temp,int(random.randint(temp,len(save_result[i][0])))):
-                results[i][0][j] =  random.uniform(-100,100) #Change values random.uniform(a,b) if you want a wider mutation
-            results[i][1] = self.Fitness(results[i][0])
-        results.sort(key=lambda x : x[1], reverse = False)
-
-        return results
-
-    def Compare(save_result : list, temp : list):
-
-        result = copy.deepcopy(save_result)
-        result.extend(x for x in temp if x not in result)
-        # result = result + list(set(temp)-set(result))
+    def Mutations(self):
+        delta=10 
+        temp = np.random.random(self.ind)
+        temp = temp<0.5
+        p1_temp =  np.clip(self.p1 + (temp * 200*np.random.random(self.ind) -100),-delta,delta)
+        temp = np.random.random(self.ind)
+        temp = temp<0.5
+        p2_temp =  np.clip(self.p2 + (temp * 200*np.random.random(self.ind) -100),-delta,delta)
+        temp = np.random.random(self.ind)
+        temp = temp<0.5
+        p3_temp =  np.clip(self.p3 + (temp * 200*np.random.random(self.ind) -100),-delta,delta)
+        temp = np.random.random(self.ind)
+        temp = temp<0.5
+        p4_temp =  np.clip(self.p4 + (temp * 200*np.random.random(self.ind) -100),-delta,delta)
+        temp = np.random.random(self.ind)
+        temp = temp<0.5
+        p5_temp =  np.clip(self.p5 + (temp * 200*np.random.random(self.ind) -100),-delta,delta)
+        temp = np.random.random(self.ind)
+        temp = temp<0.5
+        p6_temp =  np.clip(self.p6 + (temp * 200*np.random.random(self.ind) -100),-delta,delta)
         
-        result.sort(key=lambda x : x[1], reverse = False)
 
-        result = result[:len(save_result)]
-        save_result.clear()
-        save_result.extend(result)
-                
+        self.Compare(p1_temp,p2_temp,p3_temp,p4_temp,p5_temp,p6_temp)
+         
+        
+
+
+
+    def Compare(self,p1_temp,p2_temp,p3_temp,p4_temp,p5_temp,p6_temp):
+        # fitness_temp = self.Fitness(p1_temp,p2_temp,p3_temp,p4_temp,p5_temp,p6_temp)
+        keep = self.fitness < self.Fitness(p1_temp,p2_temp,p3_temp,p4_temp,p5_temp,p6_temp)
+        self.p1 = keep * self.p1 + ~keep * p1_temp
+        self.p2 = keep * self.p2 + ~keep * p2_temp
+        self.p3 = keep * self.p3 + ~keep * p3_temp
+        self.p4 = keep * self.p4 + ~keep * p4_temp
+        self.p5 = keep * self.p5 + ~keep * p5_temp
+        self.p6 = keep * self.p6 + ~keep * p6_temp
                 
         
-        return result
+         
 
     def Iterate(self,it):
         save_result=[]
