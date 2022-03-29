@@ -125,7 +125,7 @@ class Unit :
         counter = 0
         temp_bool = False
         try : 
-            while save_result[0][1] > 10:
+            while save_result[0][1] > 1:
 
                 # save_result_temp.clear()
                 
@@ -186,6 +186,11 @@ if __name__ == "__main__":
     # print(IA.Fitness([50,4,5,60,1,2]))
     result = IA.Generation(50)
     print("result :",result)
+    print(';'.join(map(str,result[0])))
+    with open("result.txt",'w') as f:
+        temp = ';'.join(map(str,result[0]))
+        temp += ' res = ' + str(result[1])
+        f.write(temp)
     for i in range(len(extract)):
         plt.scatter(extract[i][1],extract[i][2],color ='red')
         plt.scatter(result[0][0]* np.sin(result[0][1]*extract[i][0] + result[0][2]),result[0][3]* np.sin(result[0][4]*extract[i][0] + result[0][5]),color='blue' )

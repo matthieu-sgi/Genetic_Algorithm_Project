@@ -164,10 +164,10 @@ class Unit :
 
                 self.Iterate()
                 self.Mutations()
-                # self.Cross()
+                self.Cross()
 
 
-                if counter == 50:
+                if counter == 100:
                     # print("temp",save_result[0][0],save_result[0][1])
                     print("temp",self.fitness[0])
                     print("Avg :",self.Avg_Fitness())
@@ -197,7 +197,7 @@ if __name__ == "__main__":
     path = "position_sample.csv"
     extract = ExtractFile(path)
     # print(extract)
-    IA = Unit(extract,10)
+    IA = Unit(extract,1000)
     # print(IA.Fitness([50,4,5,60,1,2]))
     result = IA.Generation()
     print("result :",result)
