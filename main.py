@@ -79,7 +79,7 @@ class Unit :
         for i in range(len(save_result)) :
             temp = int(random.randint(0,len(save_result[i][0])))
             for j in range(temp,int(random.randint(temp,len(save_result[i][0])))):
-                results[i][0][j] =  random.uniform(-100,100) #Change values random.uniform(a,b) if you want a wider mutation
+                results[i][0][j] = random.uniform(-100,100) #Change values random.uniform(a,b) if you want a wider mutation
             results[i][1] = self.Fitness(results[i][0])
         results.sort(key=lambda x : x[1], reverse = False)
 
