@@ -88,8 +88,8 @@ class Unit :
 
     def Mutations(self):
         delta=100
-        par = 0.5
-        rate = 0.25
+        par = 0.1 #Working at 0.1
+        rate = 0.15 #Working at 0.15
         upper_percent = 0.3
         lower_percent = 0.0
         lower_bond = int(self.ind*lower_percent)
@@ -150,7 +150,7 @@ class Unit :
         
         try : 
             counter = 0
-            while self.fitness[0]> 4.2:
+            while self.fitness[0]> 4:
                 start = time.time()
                 
                 self.Mutations()
