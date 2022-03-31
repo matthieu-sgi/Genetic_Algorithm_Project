@@ -197,7 +197,7 @@ if __name__ == "__main__":
     path = "position_sample.csv"
     extract = ExtractFile(path)
     # print(extract)
-    IA = Unit(extract,1000)
+    IA = Unit(extract,100)
     # print(IA.Fitness([50,4,5,60,1,2]))
     result = IA.Generation()
     print("result :",result)
