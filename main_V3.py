@@ -3,6 +3,7 @@ import csv
 import time
 import matplotlib.pyplot as plt
 
+
 def ExtractFile(path) : #Method to extract CSV and return a list
     
     with open(path,newline=None) as file :
@@ -175,6 +176,24 @@ if __name__ == "__main__":
     for i in range(len(extract)): #Display the graph
         plt.scatter(extract[i][1],extract[i][2],color ='red')
         plt.scatter(result[0]* np.sin(result[1]*extract[i][0] + result[2]),result[3]* np.sin(result[4]*extract[i][0] + result[5]),color='blue' )
+    plt.show()
+
+    
+
+    ax = plt.axes(projection='3d')
+
+    # Data for a three-dimensional line
+    zline = [i[0] for i in extract]
+    xline = [i[1] for i in extract]
+    yline = [i[2] for i in extract]
+    ax.plot3D(xline, yline, zline, 'red',linestyle='',marker='x')
+
+    zline = np.linspace(0,7,10000)
+    xline = result[0]* np.sin(result[1]*zline + result[2])
+    yline = result[3]* np.sin(result[4]*zline + result[5])
+    ax.plot3D(xline, yline, zline, 'gray')
+    
+
     plt.show()
 
     pass
